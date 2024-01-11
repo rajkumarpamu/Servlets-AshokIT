@@ -1,0 +1,1211 @@
+javax.servlet
+
+jee api
+
+
+A servlet is a small Java program that runs within a Web server. Servlets receive and respond to requests from Web clients, usually across HTTP, the HyperText Transfer Protocol.
+
+root  Folder
+
+      src
+       *.java
+
+    ->
+
+      WEB-INF -> Folder
+
+      classes
+        ->*.class
+
+
+      lib
+      ->*.jar
+
+
+      web.xml (Deploymnt Descriptor)
+
+
+*.html
+*.jsp
+*.js
+
+
+                javax.servlet
+
+
+
+
+       Apache        Oracle      JBOSS         
+
+
+       Tomcat       
+
+       <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+  version="3.1">]
+  
+
+
+  1)Step -1
+
+  Create servlet program
+
+  package com.demo;
+
+import java.io.IOException;
+
+import javax.servlet.*;
+public class FirstServlet implements Servlet{
+
+  @Override
+  public void destroy() {
+    System.out.println("we are in destroy method");
+    
+  }
+
+  @Override
+  public ServletConfig getServletConfig() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public String getServletInfo() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public void init(ServletConfig config) throws ServletException {
+    System.out.println("we are in init method");
+    
+  }
+
+  @Override
+  public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
+    System.out.println("we are in service method");
+    
+  }
+
+}
+
+
+Step-2
+Make an entry of servlet in web.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+
+  <servlet>
+    <servlet-name>FirstServlet</servlet-name>
+    <servlet-class>FirstServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FirstServlet</servlet-name>
+    <url-pattern>/fs</url-pattern>
+  </servlet-mapping>
+
+</web-app>
+
+
+Step-3:
+------
+Request URL
+
+http://ipaddress : portno/projectname/urlpattern
+
+Server startup in 288 ms
+
+29-Dec-2023 08:22:37.180 INFO [localhost-startStop-2] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Program Files\Apache Software Foundation\Tomcat 8.5\webapps\servlet-demo] has finished in [15] ms
+
+The server cannot be started because one or more of the ports are invalid. Open the server editor and correct the invalid ports.
+
+
+uRL:
+
+http://localhost:9889/servlet-demo/fs  - > To cal first servlet
+
+
+http://localhost:9595/Servlet-Demo/fs
+
+avax.servlet.ServletException: Error instantiating servlet class [FirstServlet]
+  org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481)
+  org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+  org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:670)
+  org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+  org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390)
+  org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+  org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:928)
+  org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1794)
+  org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+  org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+  org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+  org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+  java.base/java.lang.Thread.run(Thread.java:833)
+
+
+  The requested resource [/Servlet-Demo/ss] is not available
+
+  This interface defines methods to initialize a servlet, to service requests, and to remove a servlet from the server. These are known as life-cycle methods and are called in the following sequence:
+
+The servlet is constructed, then initialized with the init method.
+Any calls from clients to the service method are handled.
+The servlet is taken out of service, then destroyed with the destroy method, then garbage collected and finalized.
+
+void  init(ServletConfig config)
+Called by the servlet container to indicate to a servlet that the servlet is being placed into service.
+
+Caused by: java.lang.IllegalArgumentException: Servlet mapping specifies an unknown servlet name [demo1]
+  at org.apache.catalina.core.StandardContext.addServletMappingDecoded(StandardContext.java:3028)
+  at org.apache.catalina.Context.addServletMappingDecoded(Context.java:917)
+  at org.apache.catalina.startup.ContextConfig.configureContext(ContextConfig.java:1567)
+  at org.apache.catalina.startup.ContextConfig.webConfig(ContextConfig.java:1334)
+
+
+
+  <web-app>
+
+  <servlet>
+    <servlet-name>demo1</servlet-name>
+    <servlet-class>in.ashokit.FirstServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>demo1</servlet-name>
+    <url-pattern>/fs</url-pattern>
+  </servlet-mapping>
+
+
+</web-app>
+
+
+package in.ashokit;
+
+import java.io.IOException;
+
+import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
+public class FirstServlet implements Servlet{
+  
+  public FirstServlet(){
+    System.out.println("First Servlet  is created by Srever");
+  }
+
+  @Override
+  public void destroy() {
+    System.out.println("we are destroy method");
+    
+  }
+
+  @Override
+  public ServletConfig getServletConfig() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public String getServletInfo() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public void init(ServletConfig config) throws ServletException {
+    System.out.println("we are int method");
+    
+  }
+
+  @Override
+  public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
+    System.out.println("we are service method");
+    
+  }
+  
+  
+
+}
+
+
+
+void  service(ServletRequest req, ServletResponse res)
+Called by the servlet container to allow the servlet to respond to a request.
+
+PrintWriter getWriter()
+Returns a PrintWriter object that can send character text to the client.
+
+http://localhost:9595/Servlet-Demo/index.html
+
+
+
+http://localhost:9595/Servlet-Demo/fs
+
+@WebServlet("/fs")
+public class FirstServlet implements Servlet{
+  
+  public FirstServlet(){
+    System.out.println("First Servlet  is created by Srever");
+  }
+}
+
+
+
+
+
+Form based ap[plication:
+----------------------
+
+
+file:///D:/Adv-Java-Dec/Servlet-Demo/src/main/webapp/index.html?name=raj&password=raj%40123
+
+
+http://localhost:9595/Servlet-Demo
+
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>test</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+     <welcome-file>home.html</welcome-file>
+  </welcome-file-list>
+</web-app>
+
+
+http://localhost:9595/Servlet-Demo/
+
+http://localhost:9595/fs?name=raj&password=raj%40123
+
+HTTP Status 404 – Not Found
+Type Status Report
+
+Message The requested resource [/fs] is not available
+
+Description The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.
+
+
+http://localhost:9595/Servlet-Demo/fs?name=raj&password=raj%40123
+
+ ServletRequest
+
+Defines an object to provide client request information to a servlet. The servlet container creates a ServletRequest object and passes it as an argument to the servlet's service method.
+
+
+String  getParameter(String name)
+Returns the value of a request parameter as a String, or null if the parameter does not exist.
+
+
+http://localhost:9595/Servlet-Demo/
+
+http://localhost:9595/Servlet-Demo/fs?name=kumar&password=kumar%40123
+
+
+<form action="/Servlet-Demo/fs">
+
+  Enter User Name :<input type="text" name="name"> 
+  Enter Password
+  :<input type="text" name="password"> 
+  <input type="submit" value="Go">
+</form>
+
+  @Override
+  public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
+
+    String user = req.getParameter("name");
+    String password = req.getParameter("password");
+    
+    PrintWriter writer = res.getWriter();
+    writer.print("Welcome to Servlet :"+user);
+    
+  }
+
+
+  http://localhost:9595/test.html?name=&password=
+
+
+  http://localhost:9595/Servlet-Demo/test.html?name=&password=
+  
+
+  package in.ashokit;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebServlet;
+
+@WebServlet("/fs")
+public class FirstServlet implements Servlet{
+  
+  public FirstServlet(){
+    System.out.println("First Servlet  is created by Srever");
+  }
+
+  @Override
+  public void destroy() {
+    System.out.println("we are destroy method-1");
+    
+  }
+
+  @Override
+  public ServletConfig getServletConfig() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public String getServletInfo() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public void init(ServletConfig config) throws ServletException {
+    System.out.println("we are int method");
+    
+  }
+
+  @Override
+  public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
+
+    String user = req.getParameter("name");
+    String password = req.getParameter("password");
+    
+    PrintWriter writer = res.getWriter();
+    writer.print("Welcome to Servlet :"+user);
+    
+  }
+  
+  
+
+}
+
+
+
+
+<form action="/Servlet-Demo/test.html">
+
+  Enter User Name :<input type="text" name="name"> 
+  Enter Password
+  :<input type="text" name="password"> 
+  <input type="submit" value="Go">
+</form>
+
+03/01/24
+---------
+public interface ServletConfig
+
+A servlet configuration object used by a servlet container to pass information to a servlet during initialization
+
+    <servlet>
+        <servlet-name>default</servlet-name>
+        <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>0</param-value>
+        </init-param>
+        <init-param>
+            <param-name>listings</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+
+     <web-app>
+
+  <servlet>
+    <servlet-name>demo1</servlet-name>
+    <servlet-class>in.ashokit.FirstServlet</servlet-class>
+    <init-param>
+       <param-name>dbusername</param-name>
+       <param-value>root</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>demo1</servlet-name>
+    <url-pattern>/fs</url-pattern>
+  </servlet-mapping>
+
+
+</web-app>
+
+  @Override
+  public void init(ServletConfig config) throws ServletException {
+    System.out.println("init method");
+      String initParameter = config.getInitParameter("dbusername1");
+      System.out.println("initParameter value:"+initParameter); 
+     
+  }
+
+  package in.ashokit;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebServlet;
+
+
+public class FirstServlet implements Servlet{
+  
+  ServletConfig config;
+  
+  public FirstServlet(){
+    System.out.println("First Servlet  is created by Srever");
+  }
+
+  @Override
+  public void destroy() {
+    System.out.println("we are destroy method-1");
+    
+  }
+
+  @Override
+  public ServletConfig getServletConfig() {
+    return config;
+  }
+
+  @Override
+  public String getServletInfo() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public void init(ServletConfig config) throws ServletException {    
+    this.config=config;    
+  }
+
+  @Override
+  public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
+
+    
+    ServletConfig servletConfig = getServletConfig();
+    String initParameter = servletConfig.getInitParameter("dbusername");
+    
+    PrintWriter writer = res.getWriter();
+    writer.print("Welcome to Servlet :"+initParameter);
+    
+  }
+  
+  
+
+}
+
+
+
+Enumeration<String> getInitParameterNames()
+Returns the names of the servlet's initialization parameters as an Enumeration of String objects, or an empty Enumeration if the servlet has no initialization parameters.
+
+  @Override
+  public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
+
+    
+    ServletConfig servletConfig = getServletConfig();
+     Enumeration<String> initParameterNames = servletConfig.getInitParameterNames();
+     while(initParameterNames.hasMoreElements()) {
+       String nextElement = initParameterNames.nextElement();
+       System.out.println("Key :"+nextElement);
+       String initParameter = servletConfig.getInitParameter(nextElement);
+       System.out.println("Value :"+initParameter);
+     }
+      
+    
+  }
+
+4-1-24
+
+ServletContext
+
+There is one context per "web application" per Java Virtual Machine
+
+ GenericServlet
+
+ ServletContext getServletContext()
+Returns a reference to the ServletContext in which this servlet is running.
+
+The web-app element is the root of the deployment
+        descriptor for a web application. 
+
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+  version="4.0">
+
+  <context-param>
+    <param-name>dbusername</param-name>
+    <param-value>root</param-value>
+  </context-param>
+
+  <servlet>
+    <servlet-name>demo1</servlet-name>
+    <servlet-class>in.ashokit.FirstServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>demo1</servlet-name>
+    <url-pattern>/fs</url-pattern>
+  </servlet-mapping>
+
+
+</web-app>
+
+
+public class FirstServlet extends GenericServlet {
+
+  @Override
+  public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
+    
+    ServletContext servletContext = getServletContext();
+    String initParameter = servletContext.getInitParameter("dbusername");
+    String initParameter1 = servletContext.getInitParameter("dbuserPassword");
+    PrintWriter out = res.getWriter();
+    out.print("Servlet Context Param :"+initParameter +" "+initParameter1);
+    
+  }
+
+
+
+}
+
+
+package in.ashokit;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServlet;
+
+public class FirstServlet extends HttpServlet {
+
+
+  @Override
+  public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
+    ServletContext servletContext = getServletContext();
+    String initParameter = servletContext.getInitParameter("dbusername");
+    String initParameter1 = servletContext.getInitParameter("dbuserPassword");
+    PrintWriter out = res.getWriter();
+    out.print("Servlet Context Param :" + initParameter + " " + initParameter1);
+
+  }
+
+}
+
+5-1-24
+
+html  -> action="/projectname/fs"; -> servlet
+
+public interface RequestDispatcher
+
+Defines an object that receives requests from the client and sends them to any resource (such as a servlet, HTML file, or JSP file) on the server.
+ The servlet container creates the RequestDispatcher object, which is used as a wrapper around a server resource located at a particular path or given by a particular name.
+
+RequestDispatcher:
+
+ void forward(ServletRequest request, ServletResponse response)
+Forwards a request from a servlet to another resource (servlet, JSP file, or HTML file) on the server.
+
+void  include(ServletRequest request, ServletResponse response)
+Includes the content of a resource (servlet, JSP page, HTML file) in the response.
+
+RequestDispatcher getRequestDispatcher(String path)
+Returns a RequestDispatcher object that acts as a wrapper for the resource located at the given path.
+
+public class FirstServlet extends HttpServlet {
+
+
+
+  @Override
+  public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
+    RequestDispatcher requestDispatcher = req.getRequestDispatcher("/ss");
+    requestDispatcher.forward(req, res);
+  }
+
+}
+
+
+public class SecondServlet extends HttpServlet {
+  @Override
+  public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
+    String parameter = req.getParameter("name");
+    ServletOutputStream outputStream = res.getOutputStream();
+    outputStream.print("User Info from  SecondServlet:" + parameter);
+
+  }
+
+}
+
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+  version="4.0">
+
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>test.html</welcome-file>
+  </welcome-file-list>
+
+
+  <servlet>
+
+    <servlet-name>demo1</servlet-name>
+    <servlet-class>in.ashokit.FirstServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>demo1</servlet-name>
+    <url-pattern>/fs</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>demo2</servlet-name>
+    <servlet-class>in.ashokit.SecondServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>demo2</servlet-name>
+    <url-pattern>/ss</url-pattern>
+  </servlet-mapping>
+
+
+</web-app>
+
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>test.html</welcome-file>
+  </welcome-file-list>
+
+
+void  sendRedirect(String location)
+Sends a temporary redirect response to the client using the specified redirect location URL and clears the buffer.
+
+
+public class FirstServlet extends HttpServlet {
+
+  @Override
+  public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    res.sendRedirect("http://www.facebook.com");
+  }
+
+}
+
+https://www.facebook.com/
+
+public class FirstServlet extends HttpServlet {
+
+  @Override
+  public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+
+    res.setContentType("text/html");
+    String user = req.getParameter("name");
+    String password = req.getParameter("password");
+    if (user.equals("admin") && password.equals("admin")) {
+      RequestDispatcher requestDispatcher = req.getRequestDispatcher("/ss");
+      requestDispatcher.forward(req, res);
+    } else {
+      PrintWriter writer = res.getWriter();
+      writer.print("Ivalid user Please login again !");
+      RequestDispatcher requestDispatcher = req.getRequestDispatcher("/index.html");
+      requestDispatcher.include(req, res);
+    }
+  }
+
+}
+
+package in.ashokit;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class FirstServlet extends HttpServlet {
+
+  @Override
+  public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    res.setContentType("text/html");
+    String user = req.getParameter("name");
+    String password = req.getParameter("password");
+
+    if (user.equals("admin") && password.equals("admin")) {
+      RequestDispatcher requestDispatcher = req.getRequestDispatcher("/ss");
+      requestDispatcher.forward(req, res);
+    } else {
+      PrintWriter writer = res.getWriter();
+      writer.print("Ivalid user Please login again ! :"+req.getParameter("name"));
+      RequestDispatcher requestDispatcher = req.getRequestDispatcher("/index.html");
+      requestDispatcher.include(req, res);
+    }
+  }
+
+}
+
+
+
+IF VALID:
+
+package in.ashokit;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServlet;
+
+public class SecondServlet extends HttpServlet {
+
+  @Override
+  public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
+
+    String parameter = req.getParameter("name");
+    ServletOutputStream outputStream = res.getOutputStream();
+    outputStream.print(parameter +" is a Valid User");
+
+  }
+
+}
+
+
+
+      PrintWriter writer = res.getWriter();
+      writer.print("Ivalid user Please login again ! :"+req.getParameter("name"));
+      RequestDispatcher requestDispatcher = req.getRequestDispatcher("/index.html");
+      requestDispatcher.forward(req, res);
+
+8-1-24
+
+  load-on-startup:
+  -----------------
+
+  The load-on-startup element indicates that this servlet should be loaded (instantiated and have its init() 
+ called) on the startup of the web application. The optional contents of these element must be an integer 
+ indicating the order in which the servlet should be loaded. If the value is a negative integer, or the element 
+ is not present, the container is free to load the servlet whenever it chooses. If the value is a positive integer 
+ or 0, the container must load and initialize the servlet as the application is deployed. 
+
+
+
+Attribute Object:
+-----------------
+
+
+application   - ServletContext
+
+request       - ServletRequest
+
+session       - HttpSession
+
+
+a b = (c)d;
+
+
+  @Override
+  public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    res.setContentType("text/html");
+    
+    String user = req.getParameter("name");
+    String password = req.getParameter("password");
+    
+
+    Employee employee = new Employee();
+    employee.setName(user);
+    employee.setAge("30");
+    employee.setRole("Admin");
+
+    if (user.equals("admin") && password.equals("admin")) {
+      req.setAttribute("emp", employee);
+      RequestDispatcher requestDispatcher = req.getRequestDispatcher("/ss");
+      requestDispatcher.forward(req, res);
+    } else {
+      PrintWriter writer = res.getWriter();
+      writer.print("Ivalid user Please login again ! :"+req.getParameter("name"));
+      RequestDispatcher requestDispatcher = req.getRequestDispatcher("/index.html");
+      requestDispatcher.forward(req, res);
+    }
+  }
+
+    @Override
+  public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
+    Employee parameter = (Employee)req.getAttribute("emp");
+    ServletOutputStream outputStream = res.getOutputStream();
+    outputStream.print("Role for the following user :"+parameter.getRole());
+  }
+
+9-1-24
+-------
+  Session Management:
+  -------------------
+  It is technique in java to remember the user
+
+  Session:
+  --------
+  Particular Interval time
+
+  Http is stateless Protocol
+        -> Evrery request is considered as new request 
+        -> It cannot remember the user
+
+
+  1)Cookies
+  2)HttpSession
+  3)Hidden Form Field
+  4)URL Rewriting
+
+
+Cookies:
+A small piece text information sent from server to client.
+
+Persistant  ->  Multiple Session
+Non-Persistant -> Single Session
+
+
+
+Cookie:
+
+Creates a cookie, a small amount of information sent by a servlet to a Web browser, saved by the browser, and later sent back to the server. 
+A cookie's value can uniquely identify a client, so cookies are commonly used for session management.
+
+A cookie has a name, a single value, and optional attributes such as a comment, path and domain qualifiers, a maximum age, and a version number.
+
+
+Cookie(String name, String value)
+Constructs a cookie with the specified name and value.
+
+// to make remove the cookie 
+
+void  setMaxAge(int expiry)
+Sets the maximum age in seconds for this Cookie.
+set expirey to 0.
+
+
+      //Constructs a cookie with the specified name and value.
+      Cookie ck = new Cookie("user",user);
+      //Adds the specified cookie to the response. 
+      //This method can be called multiple times to set more than one cookie
+      res.addCookie(ck);
+  
+      RequestDispatcher requestDispatcher = req.getRequestDispatcher("/ss");
+      requestDispatcher.forward(req, res);
+
+// getting cookie in second servlet
+
+        @Override
+  public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    Cookie[] cookies = req.getCookies();
+    System.out.println("Name :"+cookies[0].getName());
+    System.out.println("Value :"+cookies[0].getValue());
+  }
+  .
+
+10-1-24
+
+Gmail:
+
+  package in.ashokit;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import in.ashokit.model.Employee;
+
+@WebServlet("/LoginServlet")
+public class LoginServlet extends HttpServlet {
+  
+  public LoginServlet() {
+    System.out.println("First Servlet object is created");
+  }
+
+  @Override
+  public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    PrintWriter writer = res.getWriter();
+    res.setContentType("text/html");
+    req.getRequestDispatcher("common.html").include(req, res);
+    
+    String user = req.getParameter("name");
+    String password = req.getParameter("password");
+
+    if (user.equals("admin") && password.equals("admin")) {
+      
+      writer.println("Logged In Succesffully");
+      //Constructs a cookie with the specified name and value.
+      Cookie ck = new Cookie("user",user);
+      //Adds the specified cookie to the response. 
+      //This method can be called multiple times to set more than one cookie
+      res.addCookie(ck);
+    } else {
+      
+      writer.println("Ivalid user Please login again ! :");
+    }
+  }
+}
+
+
+
+package in.ashokit;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/LogoutServlet")
+public class LogoutServlet extends HttpServlet {
+
+  @Override
+  protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    PrintWriter writer = resp.getWriter();
+    resp.setContentType("text/html");
+    req.getRequestDispatcher("common.html").include(req, resp);
+
+    Cookie[] cookies = req.getCookies();
+    Cookie ck = cookies[0];
+    //Sets the maximum age in seconds for this Cookie. 
+    ck.setMaxAge(0);
+    resp.addCookie(ck);
+
+    writer.print("Logged Out Succeefully");
+    
+  }
+
+}
+
+
+package in.ashokit;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/ProfileServlet")
+public class ProfileServlet extends HttpServlet {
+
+  @Override
+  protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    PrintWriter writer = resp.getWriter();
+    resp.setContentType("text/html");
+    req.getRequestDispatcher("common.html").include(req, resp);
+
+    Cookie[] cookies = req.getCookies();
+    String name = cookies[0].getName();
+    String value = cookies[0].getValue();
+    System.out.println(name);
+    System.out.println(value);
+    if (name.equals("user")) {
+      writer.println("Welcome to profile");
+    } else {
+      writer.println("To access Profile Please Login First");
+    }
+
+  }
+
+}
+
+
+
+package in.ashokit;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class SecondServlet extends HttpServlet {
+
+  public SecondServlet() {
+    System.out.println("SecondServlet obj is created");
+  }
+  @Override
+  public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    Cookie[] cookies = req.getCookies();
+    System.out.println("Name :"+cookies[0].getName());
+    System.out.println("Value :"+cookies[0].getValue());
+  }
+
+}
+
+// coommon.html
+
+<a href="login.html">Login</a> |
+<a href="ProfileServlet">Profile</a> |
+<a href="LogoutServlet">Logout</a>
+
+
+//index.html
+
+<h1>Welcome to Gmail</h1>
+
+<a href="login.html">Login</a> |
+<a href="ProfileServlet">Profile</a> |
+<a href="LogoutServlet">Logout</a>
+
+
+
+// login.html
+
+<form action="/Servlet-Demo/LoginServlet">
+
+  Enter User Name :<input type="text" name="name"> 
+  Enter Password
+  :<input type="text" name="password"> 
+  <input type="submit" value="Go">
+</form>
+
+11/01/24
+
+HttpSession
+HiddenFormField
+URLRewriting
+
+req
+
+
+
+setAttribute(String name, Object o)
+Stores an attribute in this request.
+
+public interface HttpSession
+
+Provides a way to identify a user across more than one page request or visit to a Web site and to store information about that user.
+
+The servlet container uses this interface to create a session between an HTTP client and an HTTP server.
+
+ The session persists for a specified time period, across more than one connection or page request from the user. 
+
+ A session usually corresponds to one user, who may visit a site many times. 
+
+ The server can maintain a session in many ways such as using cookies or rewriting URLs.
+ This interface allows servlets to
+
+View and manipulate information about a session, such as the session identifier, creation time, and last accessed time
+Bind objects to sessions, allowing user information to persist across multiple user connections
+
+
+Returns the current session associated with this request,or if the request does not have a session, creates one.
+Returns:the HttpSession associatedwith this request
+
+HttpSession getSession()
+Returns the current session associated with this request, or if the request does not have a session, creates one.
+
+HttpSession getSession(boolean create)
+Returns the current HttpSession associated with this request or, if there is no current session and create is true, returns a new session.
+
+E633934C76386DFCC26AB23DEEA65AD2
+E633934C76386DFCC26AB23DEEA65AD2
+E633934C76386DFCC26AB23DEEA65AD2
+
+A66B11868E9581834836832C84E34CC1
+
+
+GET  -/fetchOrder
+POST - /bookOrder
+PUT  - /updateOrder
+DELETE - /deleteOrder
+
+
+Request URL:
+http://localhost:9595/Servlet-Demo/LoginServlet?name=admin&password=admin
+Request Method:
+GET
+Status Code:
+200 OK
+Remote Address:
+[::1]:9595
+
+Login
+    if (user.equals("admin") && password.equals("admin")) {
+      writer.println("Logged In Succesffully");
+      HttpSession session = req.getSession();
+      session.setAttribute("name", user);
+    } else {
+      
+      writer.println("Ivalid user Please login again ! :");
+    }
+
+
+    HttpSession session = req.getSession(false);
+    if (session != null) {
+      String attribute = (String) session.getAttribute("name");
+      writer.println("Welcome to profile" + attribute);
+    } else {
+      writer.println("To access Profile Please Login First");
+    }
+
+
+      @Override
+  protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    PrintWriter writer = resp.getWriter();
+    resp.setContentType("text/html");
+    req.getRequestDispatcher("common.html").include(req, resp);
+
+    HttpSession session = req.getSession();
+    //Invalidates this session then unbinds any objects bound to it.
+    session.invalidate();
+    
+    writer.print("Logged Out Succeefully");
+    
+  }
+
+
+
+  
