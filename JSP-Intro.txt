@@ -1,0 +1,116 @@
+JSP:
+---
+
+javax.servlet.jsp
+
+public interface JspPage extends Servlet
+
+void  jspDestroy()
+The jspDestroy() method is invoked when the JSP page is about to be destroyed.
+
+void  jspInit()
+The jspInit() method is invoked when the JSP page is initialized.
+
+ public void _jspService(ServletRequestSubtype request,
+                             ServletResponseSubtype response)
+        throws ServletException, IOException;
+
+
+The _jspService()method corresponds to the body of the JSP page. This method is defined automatically by the JSP container and should never be defined by the JSP page author.
+
+request - Provides client request information to the JSP.
+response - Assists the JSP in sending a response to the client.
+
+
+
+Java Server Pages 
+
+-> To create web application
+-> Extension Servlet 
+-> Faster development
+
+http://localhost:9595/Servlet-Demo/first.jsp
+
+JSP Translator
+
+First_jsp.java
+
+Java Compiler
+
+First_servlet.class
+
+JRE      -> 
+
+Servlet Object
+
+
+For ex: welcome to Java Server Pages test
+
+public void service(req , res){
+
+      PrintWrtiter out = res.getWriter();
+      out.printn("welcome to Java Server Pages test");
+  
+}
+
+
+Ex:
+int a=10;
+int b=20;
+int c=a+b;
+System.out.println("Sum is "+c);
+
+Result:
+
+
+public void service(req , res){
+
+      PrintWrtiter out = res.getWriter();
+      out.printn("int a=10;
+int b=20;
+int c=a+b;
+System.out.println("Sum is "+c);");
+  
+}
+
+
+JSP Scriplet Tag:
+-----------------
+<%
+   Java Code goes here
+%>
+
+If we want to write java code in jsp file we use scriplet tag.
+
+
+<%
+int a = 10;
+int b = 20;
+int c = a + b;
+out.println("Sum is " + c);
+%>
+
+
+Result:
+public void service(req , res){
+
+      PrintWrtiter out = res.getWriter();
+
+
+      int a = 10;
+      int b = 20;
+      int c = a + b;
+      out.println("Sum is " + c);
+}
+
+
+
+<%
+
+    java.util.Date date = new java.util.Date();
+    out.println("Currnt Time :"+date.toInstant());
+
+%>
+
+Result:
+Currnt Time :2024-01-25T02:56:16.906Z
