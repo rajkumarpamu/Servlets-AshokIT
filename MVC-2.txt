@@ -1,0 +1,326 @@
+
+config:
+------
+
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+    version="4.0">
+
+
+    <servlet>
+        <servlet-name>first</servlet-name>
+        <jsp-file>/first.jsp</jsp-file>
+        
+        <init-param>
+        <param-name>user</param-name>
+        <param-value>admin</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>first</servlet-name>
+        <url-pattern>/first</url-pattern>
+    </servlet-mapping>
+
+
+</web-app>
+
+<%=config.getInitParameter("user")
+%>
+
+
+NoteL:
+
+ java.lang.IllegalArgumentException: JSP file [first.jsp] must start with a '/' 
+
+ Ex:
+ <jsp-file>/first.jsp</jsp-file>
+
+ application:
+ ------------
+
+
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+    version="4.0">
+
+    <context-param>
+        <param-name>user</param-name>
+        <param-value>admin</param-value>
+    </context-param>
+
+
+    <servlet>
+        <servlet-name>first</servlet-name>
+        <jsp-file>/first.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>first</servlet-name>
+        <url-pattern>/first</url-pattern>
+    </servlet-mapping>
+
+
+</web-app>
+
+
+<%=application.getInitParameter("user")
+%>
+
+
+session:
+-------
+
+<html>
+<body>
+<%
+String fname = request.getParameter("fname");
+String lname = request.getParameter("lname");
+session.setAttribute("fname", fname);
+session.setAttribute("lname", lname);
+%>
+<a href="second.jsp">next</a>
+</body>
+</html>
+
+
+
+<%
+
+  String fname = (String)session.getAttribute("fname");
+  String lname = (String)session.getAttribute("lname");
+  
+  out.print("First Name :"+fname +"-----"+"Last Name :"+lname);
+
+
+%>
+
+pageContext:
+------------
+
+Attribute Object in Servlet.
+
+Register the name and value specified with appropriate scope semantics. If the value passed in is null,this has the same effect as calling removeAttribute( name, scope ).
+Parameters:name - the name of the attribute to setvalue - the object to associate with the name, or null ifthe attribute is to be removed from the specified scope.scope - the scope with which to associate the name/object
+
+
+<html>
+<body>
+<%
+String fname = request.getParameter("fname");
+String lname = request.getParameter("lname");
+
+pageContext.setAttribute("firstname", fname , PageContext.SESSION_SCOPE);
+pageContext.setAttribute("lastName", lname , pageContext.SESSION_SCOPE);
+
+
+%>
+<a href="second.jsp">next</a>
+</body>
+</html>
+
+
+
+<%=pageContext.getAttribute("firstname", PageContext.SESSION_SCOPE)
+%>
+
+Exception:
+----------
+
+JSP Directives:
+---------------
+ It will direct how to translate a JSP into a java program
+page
+include
+taglib
+
+<%@  page attibiuteName = "value" %>
+
+Object page = new HttpServlet();
+
+<%@ page  import="java.util.*" %>
+<%
+    Date d = new Date();
+    out.println(d.getYear());
+%>
+
+http://localhost:9595/test.jsp?n1=10&n2=2&cal+div=Submit
+
+<%@ page errorPage="error.jsp" %>
+<%
+   String n1= request.getParameter("n1");
+   String n2= request.getParameter("n2");
+   int i1 = Integer.parseInt(n1);
+   int i2 = Integer.parseInt(n2);
+   out.println("Result :"+i1/i2);
+
+%>
+
+<form action="/Servlet-Demo/test.jsp">
+Enter No1:<input type="text" name="n1"></br>
+Enter No2:<input type="text" name="n2"></br>
+<input type="submit" name="cal div"></br>
+</form>
+
+<%@ page isErrorPage="true"%>
+<%
+out.print("Some thing zero is not allowed");
+%>
+<%= exception %>
+
+
+MVC Design Pattern:
+---------------------
+
+M - Model
+
+V - View
+
+C - Controller
+
+Business Logic      -> Controller   (Servlet)
+
+Presentation Logic  -> View         (JSP)
+
+Data             -> Model           (POJO)
+
+
+login.jsp
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+
+<body>
+
+<form action="/Servlet-Demo/LoginServlet" method="POST">
+    Enter First Name :<input type="text" name="fname"> 
+    Enter Last Name  :<input type="text" name="lname"> 
+    <input type="submit" value="Save">
+</form>
+</body>
+</html>
+
+Controller:
+
+package in.ashokit;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import in.ashokit.model.Employee;
+
+@WebServlet("/LoginServlet")
+public class LoginServlet extends HttpServlet {
+    
+
+      @Override
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    
+          String fname = req.getParameter("fname");
+          String lname = req.getParameter("lname");
+          
+          Employee emp = new Employee();
+          emp.setFname(fname);
+          emp.setLname(lname);
+          
+          req.setAttribute("emp", emp);
+          
+          boolean result = emp.validate(emp);
+          if(result) {
+              RequestDispatcher rd =req.getRequestDispatcher("/success.jsp");
+              rd.forward(req, resp);
+              
+          }
+          else {
+              RequestDispatcher rd =req.getRequestDispatcher("/failure.jsp");
+              rd.forward(req, resp);
+          }
+    }
+    
+    }
+
+
+Model class:
+
+package in.ashokit.model;
+
+public class Employee {
+    private String fname;
+    private String lname;
+    
+    public String getFname() {
+        return fname;
+    }
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+    public String getLname() {
+        return lname;
+    }
+    public void setLname(String lname) {
+        this.lname = lname;
+    }
+    
+    public boolean validate(Employee emp) {
+        if(emp.getFname().length()>5 && emp.getLname().length()>5){
+            return true;
+        }
+        else {
+            return false;
+        }
+        
+    }
+
+
+}
+
+
+failure.jsp
+Invalid first Name and Last name length
+<%@ include file="login.jsp"%>
+
+
+
+success.jsp
+<%@ page import="in.ashokit.model.*"%>
+
+<%
+Employee emp = (Employee) request.getAttribute("emp");
+
+out.print("Details are :" + emp.getFname() + "" + emp.getLname());
+%>
+
+
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+    version="4.0">
+
+    <welcome-file-list>
+    <welcome-file>login.jsp</welcome-file>
+    </welcome-file-list>
+
+
+</web-app>
+
+
