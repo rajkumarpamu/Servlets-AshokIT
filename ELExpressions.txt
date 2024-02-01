@@ -1,0 +1,144 @@
+EL Expression:
+-------------
+
+request.getAttribute()
+session.getAttribute();
+request.getParameter();
+
+
+Note:
+add taglib and jstl dependencies in project build path and server lib folder
+Syntax
+
+${employee.propertyName}
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+
+<body>
+
+<form action="/Servlet-Demo/process.jsp" method="POST">
+    Enter First Name :<input type="text" name="fname"> 
+    Enter Last Name  :<input type="text" name="lname"> 
+    <input type="submit" value="Save">
+</form>
+</body>
+</html>
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+Welcome : ${param.fname}
+
+</body>
+</html>
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<% 
+
+    request.setAttribute("name", "sachin");
+
+
+
+%>
+${requestScope.name}
+
+
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<% 
+    String fname =  request.getParameter("fname");
+    request.setAttribute("name", fname);
+%>
+${requestScope.name}
+
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%
+String fname = request.getParameter("fname");
+request.setAttribute("name", fname);
+
+RequestDispatcher rd = request.getRequestDispatcher("/success.jsp");
+rd.forward(request, response);
+%>
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
+  Welcome : ${requestScope.name}
+
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
+Welcome : ${sessionScope.name}
+
+
+<%
+String fname = request.getParameter("fname");
+session.setAttribute("name", fname);
+out.print("Test");
+RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
+rd.include(request, response);
+%>
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import ="in.ashokit.model.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%  Employee emp  = (Employee)request.getAttribute("emp"); %>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<table>
+<tbody>
+
+<td>
+Welcome : ${emp.fname}
+</td>
+
+
+</tbody>
+</table>
+</body>
+</html>
