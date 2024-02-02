@@ -1,0 +1,62 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import= "in.ashokit.model.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+<c:out value="test"></c:out>
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import= "in.ashokit.model.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+<c:redirect url="/login.jsp"></c:redirect>
+
+http://localhost:9595/Servlet-Demo/
+
+Action tags:
+------------
+
+jsp:include
+jsp:forward
+jsp:useBean
+jsp:setProperty
+jsp:getProperty
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+Please Login First
+<jsp:include page="login.jsp"></jsp:include>
+
+</body>
+</html>
+
+
+<jsp:useBean id="emp" class="in.ashokit.model.Employee">
+</jsp:useBean>
+<p>Employee Object is created</p>
+<jsp:setProperty property="fname" name="emp" value="raj"/>
+<jsp:setProperty property="lname" name="emp" value="kumar"/>
+<p>Property has been set</p>
+<jsp:getProperty property="fname" name="emp"/>
+<jsp:getProperty property="lname" name="emp"/>
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import="in.ashokit.model.*"%>
+<%
+Employee emp = (Employee)request.getAttribute("emp");
+%>
+<jsp:useBean id="emp1" beanName="emp" class="in.ashokit.model.Employee">
+</jsp:useBean>
+<p>Retriving the emp Object </p>
+<jsp:getProperty property="fname" name="emp1"/>
+<jsp:getProperty property="lname" name="emp1"/>
