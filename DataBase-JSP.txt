@@ -1,0 +1,179 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+
+<body>
+
+<form action="/Servlet-Demo/process.jsp" method="POST">
+    Enter First Name :<input type="text" name="fname"> 
+    Enter Last Name  :<input type="text" name="lname"> 
+    <input type="submit" value="Save">
+</form>
+</body>
+</html>
+
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import="in.ashokit.model.*"%>
+
+<jsp:useBean id="emp" class="in.ashokit.model.Employee">
+</jsp:useBean>
+
+<jsp:setProperty property="fname" name="emp"/>
+<jsp:setProperty property="lname" name="emp"/>
+
+<p>Employee Info</p>
+<jsp:getProperty property="fname" name="emp"/></br>
+<jsp:getProperty property="lname" name="emp"/></br>
+
+
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import="in.ashokit.model.*"%>
+
+<jsp:useBean scope="session" id="emp" class="in.ashokit.model.Employee">
+</jsp:useBean>
+
+<jsp:setProperty property="*" name="emp"/>
+
+<p>Employee Info</p>
+<jsp:getProperty property="fname" name="emp"/></br>
+<jsp:getProperty property="lname" name="emp"/></br>
+
+
+<a href="success.jsp">Next </a>
+
+
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import="in.ashokit.model.*"%>
+
+<jsp:useBean scope="session" id="emp" class="in.ashokit.model.Employee">
+</jsp:useBean>
+<p>Success Info</p>
+<jsp:getProperty property="fname" name="emp"/></br>
+<jsp:getProperty property="lname" name="emp"/></br>
+
+request.getParameter();
+param
+${param.name}
+
+config.getInitParameter()
+config
+${config.name}
+
+application.getInitParameter()
+${application.name}
+
+package in.ashokit.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import in.ashokit.model.Employee;
+
+public class EmployeeDAO {
+
+    Statement createStatement;
+    //CRUD
+    EmployeeDAO() throws SQLException {
+        DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+        Connection connection = DriverManager.getConnection(null);
+        this.createStatement = connection.createStatement();
+    }
+
+    
+    public  void insert(Employee emp) throws SQLException {
+        String fname = emp.getFname();
+        String lname = emp.getLname();
+        String sql = "insert into emp values("+fname+","+lname+")";
+        createStatement.execute(sql);   
+    }
+}
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import="in.ashokit.dao.*"%>
+
+<jsp:useBean scope="session" id="emp" class="in.ashokit.model.Employee">
+</jsp:useBean>
+
+<jsp:setProperty property="*" name="emp"/>
+
+<%= EmployeeDAO.insert(emp);
+%>
+
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import="in.ashokit.dao.*,java.util.*"%>
+
+<jsp:useBean scope="session" id="emp" class="in.ashokit.model.Employee">
+</jsp:useBean>
+
+<jsp:setProperty property="*" name="emp"/>
+
+<% 
+EmployeeDAO dao = new EmployeeDAO();
+dao.insert(emp);
+%>
+
+
+
+package in.ashokit.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import in.ashokit.model.Employee;
+
+public class EmployeeDAO {
+
+    Statement createStatement;
+    //CRUD
+    EmployeeDAO() throws SQLException {
+        DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+        Connection connection = DriverManager.getConnection(null);
+        this.createStatement = connection.createStatement();
+    }
+
+    
+    public  void insert(Employee emp) throws SQLException {
+        String fname = emp.getFname();
+        String lname = emp.getLname();
+        String sql = "insert into emp values("+fname+","+lname+")";
+        createStatement.execute(sql);
+        
+    
+        
+    }
+}
+
+
+
+<%!  %>  -> Decleration
+<%  %>   -> Scriptlet
+<%=  %>  -> Expression 
+<%@ taglib uri="http://jakarta.apache.org/taglibs/standard/permittedTaglibs" prefix="c" %>
+<%@ page contentType="text/html; charset=ISO-8859-1" %>
+<%@ include file="" %>
+
+<c:>
+
+
+
+
+
+ 
